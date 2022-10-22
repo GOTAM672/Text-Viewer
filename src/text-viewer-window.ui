@@ -20,12 +20,10 @@
           </object>
         </child>
         <child>
-          <object class="GtkLabel" id="label">
-            <property name="label">Hello, World!</property>
-            <property name="vexpand">true</property>
-            <style>
-              <class name="title-1"/>
-            </style>
+          <object class="GtkScrolledWindow">
+            <property name="child">
+                <object class="GtkTextView" id="main_text_view"></object>
+            </property>
           </object>
         </child>
       </object>
