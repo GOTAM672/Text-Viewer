@@ -29,9 +29,21 @@ struct _TextViewerWindow
   /* Template widgets */
   GtkHeaderBar        *header_bar;
   GtkTextView         *main_text_view;
+  GtkButton           *open_button;
 };
 
 G_DEFINE_FINAL_TYPE (TextViewerWindow, text_viewer_window, ADW_TYPE_APPLICATION_WINDOW)
+
+
+static void
+text_viewer_window__open_clicked (GtkButton *button,
+                                 gpointer   user_data)
+{
+
+  TextViewerWindow *self = user_data;
+  g_print ("open button clicked!");
+
+}
 
 static void
 text_viewer_window_class_init (TextViewerWindowClass *klass)
@@ -41,10 +53,13 @@ text_viewer_window_class_init (TextViewerWindowClass *klass)
   gtk_widget_class_set_template_from_resource (widget_class, "/com/example/TextViewer/text-viewer-window.ui");
   gtk_widget_class_bind_template_child (widget_class, TextViewerWindow, header_bar);
   gtk_widget_class_bind_template_child (widget_class, TextViewerWindow, main_text_view);
+  gtk_widget_class_bind_template_child (widget_class, TextViewerWindow, open_button);
 }
 
 static void
 text_viewer_window_init (TextViewerWindow *self)
 {
   gtk_widget_init_template (GTK_WIDGET (self));
+
+  g_signal_connect (self->open_button, "clicked", G_CALLBACK (text_viewer_window__open_clicked), self);
 }
