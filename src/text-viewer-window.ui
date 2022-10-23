@@ -21,6 +21,8 @@
         </child>
         <child>
           <object class="GtkScrolledWindow">
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
             <property name="child">
                 <object class="GtkTextView" id="main_text_view"></object>
             </property>
