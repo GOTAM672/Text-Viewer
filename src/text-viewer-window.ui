@@ -11,6 +11,11 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkHeaderBar" id="header_bar">
+            <child type="start">
+              <object class="GtkButton" id="open_button">
+                <property name="label">Open</property>
+              </object>
+            </child>
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="icon-name">open-menu-symbolic</property>
@@ -24,7 +29,12 @@
             <property name="hexpand">1</property>
             <property name="vexpand">1</property>
             <property name="child">
-                <object class="GtkTextView" id="main_text_view"></object>
+                <object class="GtkTextView" id="main_text_view">
+                  <property name="margin-start">6</property>
+                  <property name="margin-end">6</property>
+                  <property name="margin-top">6</property>
+                  <property name="margin-bottom">6</property>
+                </object>
             </property>
           </object>
         </child>
