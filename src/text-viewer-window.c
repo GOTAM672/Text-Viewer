@@ -35,13 +35,49 @@ struct _TextViewerWindow
 G_DEFINE_FINAL_TYPE (TextViewerWindow, text_viewer_window, ADW_TYPE_APPLICATION_WINDOW)
 
 
+
 static void
-text_viewer_window__open_clicked (GtkButton *button,
+on_response (GtkNativeDialog *native,
+             int              response,
+             TextViewerWindow *self)
+{
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
+      g_autoptr (GFile) file = gtk_file_chooser_get_file (chooser);
+
+      //save_to_file (file);
+
+      g_print ("Selected file : %s",g_file_peek_path (file));
+
+    }
+
+  g_object_unref (native);
+}
+
+
+
+static void
+text_viewer_window__open_clicked (GtkButton *button G_GNUC_UNUSED,
                                  gpointer   user_data)
 {
 
   TextViewerWindow *self = user_data;
-  g_print ("open button clicked!");
+
+
+  GtkFileChooserNative *native;
+  //GtkFileChooser *chooser;
+  //GtkFileChooserAction action = GTK_FILE_CHOOSER_ACTION_OPEN;
+
+  native = gtk_file_chooser_native_new ("Open File",
+                                        GTK_WINDOW (self),
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+                                        "_Open",
+                                        "_Cancel");
+
+  g_signal_connect (native, "response", G_CALLBACK (on_response), self);
+  gtk_native_dialog_show (GTK_NATIVE_DIALOG (native));
+
 
 }
 
