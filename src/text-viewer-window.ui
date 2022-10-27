@@ -16,6 +16,14 @@
                 <property name="label">Open</property>
               </object>
             </child>
+
+            <child type="start">
+              <object class="GtkMenuButton" id="markup_button">
+                <property name="label">Markup</property>
+                <property name="direction">down</property>
+              </object>
+            </child>
+
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="icon-name">open-menu-symbolic</property>
