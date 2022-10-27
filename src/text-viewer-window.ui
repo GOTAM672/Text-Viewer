@@ -18,9 +18,9 @@
             </child>
 
             <child type="start">
-              <object class="GtkMenuButton" id="markup_button">
+              <object class="GtkToggleButton" id="markup_button">
                 <property name="label">Markup</property>
-                <property name="direction">down</property>
+
               </object>
             </child>
 
