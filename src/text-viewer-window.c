@@ -46,7 +46,7 @@ on_response (GtkNativeDialog *native,
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
       g_autoptr (GFile) file = gtk_file_chooser_get_file (chooser);
 
-      //save_to_file (file);
+      open_file (self, file);
 
       g_print ("Selected file : %s",g_file_peek_path (file));
 
