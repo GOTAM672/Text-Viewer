@@ -42,11 +42,13 @@ open_file_complete (GObject      *source_object,
                     GAsyncResult *res,
                     gpointer     user_data)
 {
+  GFile *file = G_FILE (source_object);
+
   g_autofree char *contents = NULL;
   gsize length = 0;
   g_autoptr (GError) error = NULL;
 
-  g_file_load_contents_finish (G_FILE(source_object),
+  g_file_load_contents_finish (file,
                                res,
                                &contents,
                                &length,
@@ -70,6 +72,13 @@ open_file_complete (GObject      *source_object,
   GtkTextBuffer *buffer = gtk_text_view_get_buffer (self->main_text_view);
 
   gtk_text_buffer_set_text (buffer, contents, length);
+
+  g_autofree char *basename = g_file_get_basename (file);
+
+  if (basename != NULL)
+    {
+      gtk_window_set_title (GTK_WINDOW(self), basename);
+    }
 
 }
 
