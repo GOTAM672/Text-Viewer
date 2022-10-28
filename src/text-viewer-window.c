@@ -22,6 +22,8 @@
 
 #include "text-viewer-window.h"
 
+#include <gio/gio.h>
+
 struct _TextViewerWindow
 {
   AdwApplicationWindow  parent_instance;
@@ -36,7 +38,6 @@ G_DEFINE_FINAL_TYPE (TextViewerWindow, text_viewer_window, ADW_TYPE_APPLICATION_
 
 
 static void
-void
 open_file_complete (GObject      *source_object,
                     GAsyncResult *res,
                     gpointer     user_data)
@@ -45,7 +46,7 @@ open_file_complete (GObject      *source_object,
   gsize length = 0;
   g_autoptr (GError) error = NULL;
 
-  gboolean res = g_file_load_contents_finish (G_FILE(source_object),
+  gboolean result = g_file_load_contents_finish (G_FILE(source_object),
                                               res,
                                               &contents,
                                               &length,
@@ -57,6 +58,13 @@ open_file_complete (GObject      *source_object,
       g_printerr ("Unable to open the file : %s\n", error->message);
       return;
     }
+
+  TextViewerWindow   *self = user_data;
+
+  GtkTextBuffer *buffer = gtk_text_view_get_buffer (self->main_text_view);
+
+  gtk_text_buffer_set_text (buffer, contents, length);
+
 }
 
 
