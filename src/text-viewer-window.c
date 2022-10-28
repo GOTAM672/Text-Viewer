@@ -34,7 +34,12 @@ struct _TextViewerWindow
 
 G_DEFINE_FINAL_TYPE (TextViewerWindow, text_viewer_window, ADW_TYPE_APPLICATION_WINDOW)
 
+static void
+open_file (TextViewerWindow   *self,
+           GFile              *file)
+{
 
+}
 
 static void
 on_response (GtkNativeDialog *native,
@@ -46,7 +51,7 @@ on_response (GtkNativeDialog *native,
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (native);
       g_autoptr (GFile) file = gtk_file_chooser_get_file (chooser);
 
-      //open_file (self, file);
+      open_file (self, file);
 
       g_print ("Selected file : %s",g_file_peek_path (file));
 
