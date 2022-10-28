@@ -46,16 +46,22 @@ open_file_complete (GObject      *source_object,
   gsize length = 0;
   g_autoptr (GError) error = NULL;
 
-  gboolean result = g_file_load_contents_finish (G_FILE(source_object),
-                                              res,
-                                              &contents,
-                                              &length,
-                                              NULL,
-                                              &error);
+  g_file_load_contents_finish (G_FILE(source_object),
+                               res,
+                               &contents,
+                               &length,
+                               NULL,
+                               &error);
 
   if (error != NULL)
     {
       g_printerr ("Unable to open the file : %s\n", error->message);
+      return;
+    }
+
+  if (!g_utf8_validate (contents, length, NULL))
+    {
+      g_printerr ("Unable to load the contents of the file : not UTF-8\n");
       return;
     }
 
