@@ -34,10 +34,37 @@ struct _TextViewerWindow
 
 G_DEFINE_FINAL_TYPE (TextViewerWindow, text_viewer_window, ADW_TYPE_APPLICATION_WINDOW)
 
+
+static void
+void
+open_file_complete (GObject      *source_object,
+                    GAsyncResult *res,
+                    gpointer     user_data)
+{
+  g_autofree char *contents = NULL;
+  gsize length = 0;
+  g_autoptr (GError) error = NULL;
+
+  gboolean res = g_file_load_contents_finish (G_FILE(source_object),
+                                              res,
+                                              &contents,
+                                              &length,
+                                              NULL,
+                                              &error);
+
+  if (error != NULL)
+    {
+      g_printerr ("Unable to open the file : %s\n", error->message);
+      return;
+    }
+}
+
+
 static void
 open_file (TextViewerWindow   *self,
            GFile              *file)
 {
+  g_file_load_contents_async (file, NULL, open_file_complete, self);
 
 }
 
